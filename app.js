@@ -319,6 +319,6 @@ let deleteTaskFromList = (_listId) =>{
 
 
 app.listen(3000, () =>{
-    console.log('Server is listening : 3000')
+    console.log('Server is listening : http://localhost:3000')
 });
 
