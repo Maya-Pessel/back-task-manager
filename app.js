@@ -8,6 +8,8 @@ const app = express();
 const {mongoose} = require("./db/mongoose");
 const jwt = require('jsonwebtoken');
 
+const PORT = process.env.PORT || 3000
+
 const bodyParser = require('body-parser');
 
 const cors = require('cors');
@@ -318,7 +320,7 @@ let deleteTaskFromList = (_listId) =>{
 }
 
 
-app.listen(3000, () =>{
-    console.log('Server is listening : http://localhost:3000')
+app.listen(PORT, () =>{
+    console.log('Server is listening : 3000')
 });
 
