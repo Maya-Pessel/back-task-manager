@@ -278,28 +278,37 @@ app.post('/users', (req, res) => {
 });
 
 // LOG IN
-app.post('/users/login', (req, res) => {
+app.post('/users/login', async(req, res) => {
     let email = req.body.email;
     let password = req.body.password;
 
-    User.findByCredentials(email, password).then((user) => {
-        return user.createSession().then((refreshToken) => {
-            // Session créee avec succes
-            // now we geneate an access auth token for the user
+    // User.findByCredentials(email, password).then((user) => {
+    //     return user.createSession().then((refreshToken) => {
+    //         // Session créee avec succes
+    //         // now we geneate an access auth token for the user
 
-            return user.generateAccessAuthToken().then((accessToken) => {
-                return { accessToken, refreshToken }
-            });
-        }).then((authTokens) => {
-            res
-                .header('x-refresh-token', authTokens.refreshToken)
-                .header('x-access-token', authTokens.accessToken)
-                .send(user);
+    //         return user.generateAccessAuthToken().then((accessToken) => {
+    //             return { accessToken, refreshToken }
+    //         });
+    //     }).then((authTokens) => {
+    //         response
+    //             .header('x-refresh-token', authTokens.refreshToken)
+    //             .header('x-access-token', authTokens.accessToken)
+    //             .send(user);
+    //     })
+    // }).catch((e) => {
+    //     res.send(e)
+    // });
+
+    const userTest = await User.findByCredentials(email,password)
+    if(userTest) {
+        res.status(200).json(userTest)
+    }else{
+        res.json({
+            "error":"something went wrong"
         })
-    }).catch((e) => {
-        res.status(400).send(e);
-        console.log(e);
-    });
+    }
+
 });
 
 app.get("/",(req,res) =>{
