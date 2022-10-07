@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 // CORS
 
 app.use(cors({origin: [
-        "http://project-taskmanager.herokuapp.com"
+        "http://localhost:4200"
     ], credentials: true}));
 
 app.use(function(req, res, next) {
@@ -298,6 +298,7 @@ app.post('/users/login', (req, res) => {
         })
     }).catch((e) => {
         res.status(400).send(e);
+        console.log(e);
     });
 });
 
