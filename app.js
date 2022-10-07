@@ -22,7 +22,7 @@ app.use(bodyParser.json());
 // CORS
 
 app.use(cors({origin: [
-        "http://localhost:4200"
+        "http://project-taskmanager.herokuapp.com"
     ], credentials: true}));
 
 app.use(function(req, res, next) {
@@ -259,6 +259,7 @@ app.post('/users', (req, res) => {
     let body = req.body;
     let newUser = new User(body);
 
+
     newUser.save().then(() =>{
         return newUser.createSession()
     }).then((refreshToken) =>{
@@ -299,6 +300,10 @@ app.post('/users/login', (req, res) => {
         res.status(400).send(e);
     });
 });
+
+app.get("/",(req,res) =>{
+    res.send('hello')
+})
 
 
 app.get('/users/me/access-token', verifySession, (req, res)=>{
