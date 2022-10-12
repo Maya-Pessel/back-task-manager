@@ -21,9 +21,7 @@ app.use(bodyParser.json());
 
 // CORS
 
-app.use(cors({origin: [
-        "http://localhost:4200"
-    ], credentials: true}));
+app.use(cors({origin: "*", credentials: true,preflightContinue: true}));
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*"); // update to match the domain you will make the request from
@@ -40,6 +38,8 @@ app.use(function(req, res, next) {
 
 let authenticate = (req, res, next)=>{
     let token = req.header('x-access-token')
+
+    console.log(token)
 
     jwt.verify(token, User.getJWTSecret(), (err, decoded)=>{
         if(err){
@@ -302,7 +302,13 @@ app.post('/users/login', async(req, res) => {
 
     const userTest = await User.findByCredentials(email,password)
     if(userTest) {
-        res.status(200).json(userTest)
+        const refreshToken = await userTest.createSession()
+        const accessToken = await userTest.generateAccessAuthToken()
+        res
+            .header('x-refresh-token', refreshToken)
+            .header('x-access-token', accessToken)
+            .status(200)
+            .send(userTest)
     }else{
         res.json({
             "error":"something went wrong"
