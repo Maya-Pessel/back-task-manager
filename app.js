@@ -293,6 +293,8 @@ app.post('/users/login', async(req, res) => {
     if(userTest) {
         const refreshToken = await userTest.createSession()
         const accessToken = await userTest.generateAccessAuthToken()
+        userTest.accessToken = accessToken;
+        userTest.refreshToken = refreshToken;
         res
             .header('x-refresh-token', refreshToken)
             .header('x-access-token', accessToken)
