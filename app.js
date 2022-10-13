@@ -306,16 +306,15 @@ app.post('/users/login', async(req, res) => {
 
 });
 
-// log out
-app.delete('/users/me/token', authenticate, (req, res) => {
-    // find the user and remove the token
-    req.user.removeToken(req.token).then(() => {
-        res.status(200).send();
-    }, () => {
-        res.status(400).send();
-    });
-});
-
+// // log out
+// app.delete('/users/logout', authenticate, (req, res) => {
+//     // find the user and remove the token
+//     req.user.removeToken(req.token).then(() => {
+//         res.status(200).send();
+//     }, () => {
+//         res.status(400).send();
+//     });
+// });
 
 app.get("/",(req,res) =>{
     res.json({
