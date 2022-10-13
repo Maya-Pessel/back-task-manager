@@ -258,9 +258,7 @@ app.post('/users', (req, res) => {
         });
     }).then((authTokens) => {
         res
-            .header('x-refresh-token', authTokens.refreshToken)
-            .header('x-access-token', authTokens.accessToken)
-            .send(newUser)
+        .json({_id: userTest._id, email: userTest.email, accessToken, refreshToken})
     }).catch((e) => {
         res.status(400).send(e)
     });
@@ -299,7 +297,7 @@ app.post('/users/login', async(req, res) => {
             .header('x-refresh-token', refreshToken)
             .header('x-access-token', accessToken)
             .status(200)
-            .json({email: userTest.email, accessToken, refreshToken})
+            .json({_id: userTest._id, email: userTest.email, accessToken, refreshToken})
     }else{
         res.json({
             "error":"something went wrong"
