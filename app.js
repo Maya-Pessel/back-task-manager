@@ -299,7 +299,7 @@ app.post('/users/login', async(req, res) => {
             .header('x-refresh-token', refreshToken)
             .header('x-access-token', accessToken)
             .status(200)
-            .send(userTest)
+            .json({email: userTest.email, accessToken, refreshToken})
     }else{
         res.json({
             "error":"something went wrong"
